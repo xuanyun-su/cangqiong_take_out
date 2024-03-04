@@ -43,11 +43,13 @@ public interface DishMapper {
     @AutoFill(value = OperationType.UPDATE)
     void update(Dish dish);
 
-
     @Update("update dish set status = #{status} where id = #{id}")
     @AutoFill(value = OperationType.UPDATE)
-    void updateStatus(Integer status,Long id);
+    void updateStatus(Integer status, Long id);
 
     List<Dish> list(Dish dish);
+
+    @Select("select a.* from dish a left join setmeal_dish b on a.id = b.dish_id where b.setmeal_id = #{setmealId}")
+    List<Dish> getBySetmealId(Long id);
 
 }

@@ -2,6 +2,7 @@ package com.sky.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -48,4 +49,10 @@ public interface SetmealMapper {
             "from setmeal_dish sd left join dish d on sd.dish_id = d.id " +
             "where sd.setmeal_id = #{setmealId}")
     List<DishItemVO> getDishItemBySetmealId(Long setmealId);
+@Delete("delete from setmeal where id = #{id}")
+    void deleteById(Long setmealId);
+    @Select("select * from setmeal where id = #{id}")
+    Setmeal getById(Long id);
+
+    void update(Setmeal setmeal);
 }
