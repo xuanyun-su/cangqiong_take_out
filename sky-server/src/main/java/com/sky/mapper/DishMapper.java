@@ -1,6 +1,7 @@
 package com.sky.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
@@ -51,5 +52,7 @@ public interface DishMapper {
 
     @Select("select a.* from dish a left join setmeal_dish b on a.id = b.dish_id where b.setmeal_id = #{setmealId}")
     List<Dish> getBySetmealId(Long id);
+
+    Integer countByMap(Map map);
 
 }

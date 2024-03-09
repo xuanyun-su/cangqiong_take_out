@@ -1,6 +1,7 @@
 package com.sky.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
@@ -55,4 +56,11 @@ public interface SetmealMapper {
     Setmeal getById(Long id);
 
     void update(Setmeal setmeal);
+
+       /**
+     * 根据条件统计套餐数量
+     * @param map
+     * @return
+     */
+    Integer countByMap(Map map);
 }
