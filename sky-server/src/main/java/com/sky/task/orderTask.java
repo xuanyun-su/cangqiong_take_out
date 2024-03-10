@@ -20,7 +20,8 @@ public class orderTask {
     @Autowired
     private OrderMapper orderMapper;
 
-    @Scheduled(cron = "0 * * * * ? ")
+    // 处理15分钟超时订单
+    @Scheduled(cron = "0 * * * * ? ")//每分钟触发一次
     public void processTimeoytOrder() {
         log.info("定时处理超时订单{}", LocalDateTime.now());
         List<Orders> orderList = orderMapper.getByStautsAndOrderTimeLT(Orders.PENDING_PAYMENT,
@@ -30,14 +31,14 @@ public class orderTask {
                 orders.setStatus(Orders.CANCELLED);
                 orders.setCancelReason("订单超时，自动取消");
                 orders.setCancelTime(LocalDateTime.now());
-                // TODO update没写
-                // orderMapper.update(orders)
+                orderMapper.update(orders);
 
             }
         }
     }
 
     // 每天凌晨一点
+
     @Scheduled(cron = "0 0 1 * * ?")
     public void processDeliveryOrder() {
         log.info("定时处理始终处于派送的订单{}", LocalDateTime.now());
@@ -48,8 +49,7 @@ public class orderTask {
                 orders.setStatus(Orders.COMPLETED);
                 // orders.setCancelReason("订单超时，自动取消");
                 // orders.setCancelTime(LocalDateTime.now());
-                // TODO update没写
-                // orderMapper.update(orders)
+                orderMapper.update(orders);
 
             }
         }

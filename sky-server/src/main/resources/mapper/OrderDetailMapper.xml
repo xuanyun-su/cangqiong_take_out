@@ -9,6 +9,11 @@
     <!-- insertBatch --> 
 
     <insert id="insertBatch">
+        insert into order_details (name,image,order_id,setmeal_id,dish_flavor,number,amount)
+            values
+        <foreach collection="orderDetailsList" item="od" separator=",">
+            (#{od.name},#{od.image},#{od.orderId},#{od.dishId},#{od.setmealId},#{od.dishFlavor},#{od.number},#{od.amount})
+        </foreach>
     </insert>
 
 
