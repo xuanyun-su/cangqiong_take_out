@@ -38,7 +38,7 @@ public class ShoppingCartServiceImpl implements ShopingCartService {
         shoppingCart.setUserId(BaseContext.getCurrentId());
         List<ShoppingCart> list = shoppingCartMapper.list(shoppingCart);
         if (list != null && list.size() > 0) {
-            ShoppingCart cart = list.get(9);
+            ShoppingCart cart = list.get(0);
             cart.setNumber(cart.getNumber() + 1);
             shoppingCartMapper.update(cart);
         } else {
@@ -69,6 +69,25 @@ public class ShoppingCartServiceImpl implements ShopingCartService {
     }
 
     @Override
+    public void subShoppingCart(ShoppingCartDTO shoppingCartDTO) {
+        ShoppingCart shoppingCart = new ShoppingCart();
+        BeanUtils.copyProperties(shoppingCartDTO, shoppingCart);
+        shoppingCart.setUserId(BaseContext.getCurrentId());
+        List<ShoppingCart> list = shoppingCartMapper.list(shoppingCart);
+        if (list != null && list.size() > 0) {
+            ShoppingCart cart = list.get(0);
+            if (cart.getNumber() <= 1)
+                cart.setNumber(1);
+            else
+                cart.setNumber(cart.getNumber() - 1);
+            shoppingCartMapper.update(cart);
+        }
+        // } else {
+        //     // TODO 应该报个异常 但一般不会出错
+        // }
+    }
+
+    @Override
     public List<ShoppingCart> showShppingCart() {
         Long currentId = BaseContext.getCurrentId();
         ShoppingCart shoppingCart = ShoppingCart.builder()
@@ -76,12 +95,13 @@ public class ShoppingCartServiceImpl implements ShopingCartService {
         List<ShoppingCart> list = shoppingCartMapper.list(shoppingCart);
         return list;
     }
+
     // 清空购物车
     @Override
     public void cleanShoppingCart() {
         Long id = BaseContext.getCurrentId();
         shoppingCartMapper.deletebyid(id);
-        
+
     }
 
 }

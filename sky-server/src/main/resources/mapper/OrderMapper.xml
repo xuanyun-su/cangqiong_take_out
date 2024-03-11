@@ -29,7 +29,7 @@
 
         <!-- getSalesTop10 --> 
 
-        <select id="getSalesTop10" resultType="com.sky.dto.GoodsSaleDTO">
+        <select id="getSalesTop10" resultType="com.sky.dto.GoodsSalesDTO">
                 select od.name,sum(od.number) number from order_detail od,orders o
                 where od.order_id = o.id and o.status = 5
                 <if test="bigin !=null">
